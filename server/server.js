@@ -11,7 +11,14 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 
 
-// Start the server
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+// Connect to the database and start the server using promises
+connectDB().then(() => {
+    // Start the server only after the database is connected
+    app.listen(port, () => {
+        console.log(`Server is running at http://localhost:${port}`);
+    });
+}).catch((error) => {
+    // Handle any errors in connecting to the database
+    console.error('Failed to connect to the database', error);
+    process.exit(1);  // Exit if there is a failure
 });
