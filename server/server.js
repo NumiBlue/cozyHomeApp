@@ -1,15 +1,14 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-
+const connectDB = require('./config/db'); // Import your MongoDB connection
 const userRoutes = require('./routes/userRoutes');
 
-//Middleware
+// Middleware
 app.use(express.json());
 
-//Use Routes
+// Use Routes
 app.use('/api/users', userRoutes);
-
 
 // Connect to the database and start the server using promises
 connectDB().then(() => {
