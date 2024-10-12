@@ -2,13 +2,13 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const connectDB = require('./config/db'); // Import your MongoDB connection
-const userRoutes = require('./routes/userRoutes');
+const userRoutes = require('./routes/userRoutes'); // Import user routes
 
-// Middleware
+// Middleware to parse JSON
 app.use(express.json());
 
 // Use Routes
-app.use('/api/users', userRoutes);
+app.use('/api/users', userRoutes); // All user-related routes will have /api/users prefix
 
 // Connect to the database and start the server using promises
 connectDB().then(() => {
