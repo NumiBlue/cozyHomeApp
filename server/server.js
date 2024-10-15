@@ -1,23 +1,22 @@
 const express = require('express');
+const connectDB = require('./config/db'); // Ensure this path is correct
+const userRoutes = require('./routes/userRoutes'); // Ensure this path is correct
+
 const app = express();
 const port = 3000;
-const connectDB = require('./config/db'); // Import your MongoDB connection
-const userRoutes = require('./routes/userRoutes'); // Import user routes
 
-// Middleware to parse JSON
+// Middleware
 app.use(express.json());
 
 // Use Routes
-app.use('/api/users', userRoutes); // All user-related routes will have /api/users prefix
+app.use('/api/users', userRoutes);
 
-// Connect to the database and start the server using promises
+// Connect to database and start server
 connectDB().then(() => {
-    // Start the server only after the database is connected
     app.listen(port, () => {
-        console.log(`Server is running at http://localhost:${port}`);
+        console.log(`Server running at http://localhost:${port}`);
     });
 }).catch((error) => {
-    // Handle any errors in connecting to the database
-    console.error('Failed to connect to the database', error);
-    process.exit(1);  // Exit if there is a failure
+    console.error('Failed to connect to the database:', error);
+    process.exit(1);
 });
